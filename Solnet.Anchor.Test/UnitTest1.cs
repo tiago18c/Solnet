@@ -9,8 +9,14 @@ namespace Solnet.Anchor.Test
         [TestMethod]
         public void TestMethod1()
         {
-            var res = IdlParser.ParseFile("Resources/ChatExample.json");
+            //var res = IdlParser.ParseFile("Resources/ChatExample.json");
+            var res = IdlParser.ParseFile("Resources/SwapEdited.json");
             Assert.IsNotNull(res);
+
+            var code = res.GenerateCode();
+
+            Assert.IsNotNull(code);
+
         }
     }
 }

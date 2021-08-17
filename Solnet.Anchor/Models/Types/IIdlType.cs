@@ -8,5 +8,6 @@ namespace Solnet.Anchor.Models.Types
 {
     public interface IIdlType
     {
+        string GenerateTypeDeclaration();
     }
 }

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Solnet.Anchor.Converters
 {
-    public class IEnumVariantsConverter : JsonConverter<IEnumVariants>
+    public class IEnumVariantsConverter : JsonConverter<IEnumVariant>
     {
-        public override IEnumVariants Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IEnumVariant Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(Utf8JsonWriter writer, IEnumVariants value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IEnumVariant value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

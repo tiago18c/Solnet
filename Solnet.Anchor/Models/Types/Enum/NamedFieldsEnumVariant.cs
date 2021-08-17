@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Solnet.Anchor.Models.Types
 {
-    public interface IIdlTypeDefinitionTy
+    public class NamedFieldsEnumVariant : IEnumVariant
     {
-        string GenerateCode();
+        public string Name { get; set; }
+
+        public IdlField[] Fields { get; set; }
     }
 }

@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace Solnet.Anchor.Models.Types
 {
-    public class TupleEnumFields : IEnumVariants
+    public class TupleFieldsEnumVariant : IEnumVariant
     {
+        public string Name { get; set; }
 
         [JsonConverter(typeof(IIdlTypeArrayConverter))]
-        public IIdlType[] Types { get; set; }
+        public IIdlType[] Fields { get; set; }
     }
 }

@@ -13,5 +13,15 @@ namespace Solnet.Anchor.Models.Types.Base
 
         [JsonConverter(typeof(IIdlTypeConverter))]
         public IIdlType ValuesType { get; set; }
+
+        public string GenerateTypeDeclaration()
+        {
+            string typeDecl = ValuesType.GenerateTypeDeclaration();
+
+            if (ValuesType is IdlValueType)
+                typeDecl += "?";
+
+            return typeDecl;
+        }
     }
 }

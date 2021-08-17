@@ -1,5 +1,6 @@
 ﻿using Solnet.Anchor.Models;
 using Solnet.Anchor.Models.Types;
+using Solnet.Anchor.Models.Types.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,12 +59,12 @@ namespace Solnet.Anchor.Converters
                 if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException("Unexpected error value.");
 
                 propertyName = reader.GetString();
-                if ("fields" != propertyName) throw new JsonException("Unexpected error value.");
 
                 reader.Read();
 
                 if ("struct" == typeType)
                 {
+                    if ("fields" != propertyName) throw new JsonException("Unexpected error value.");
                     var res = JsonSerializer.Deserialize<IdlField[]>(ref reader, options);
 
                     types.Add(new StructIdlTypeDefinition() { Name = typeName, Fields = res });
@@ -71,7 +72,73 @@ namespace Solnet.Anchor.Converters
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    if ("variants" != propertyName) throw new JsonException("Unexpected error value.");
+
+                    List<IEnumVariant> variants = new();
+
+                    reader.Read();
+                    while (reader.TokenType == JsonTokenType.StartObject)
+                    {
+
+                        //if (reader.TokenType != JsonTokenType.StartObject) throw new JsonException("Unexpected error value.");
+
+
+                        Utf8JsonReader tmp = reader;
+
+                        tmp.Read();
+
+                        if (tmp.TokenType != JsonTokenType.PropertyName) throw new JsonException("Unexpected error value.");
+                        propertyName = tmp.GetString();
+
+                        if("name" != propertyName) throw new JsonException("Unexpected error value.");
+
+
+                        tmp.Read();
+
+                        if (tmp.TokenType != JsonTokenType.String) throw new JsonException("Unexpected error value.");
+                        string variantName = tmp.GetString();
+
+                        tmp.Read();
+
+                        if (tmp.TokenType != JsonTokenType.PropertyName)
+                        {
+                            variants.Add(new SimpleEnumVariant() { Name = variantName });
+
+                        }
+                        else
+                        {
+
+                            propertyName = tmp.GetString();
+
+                            if ("fields" != propertyName) throw new JsonException("Unexpected error value.");
+
+                            tmp.Read();
+
+
+                            if (tmp.TokenType != JsonTokenType.StartArray) throw new JsonException("Unexpected error value.");
+
+                            tmp.Read();
+
+
+
+                            if (tmp.TokenType == JsonTokenType.StartObject)
+                            {
+                                var variant = JsonSerializer.Deserialize<NamedFieldsEnumVariant>(ref reader, options);
+
+                                variants.Add(variant);
+                            }
+                            else
+                            {
+                                var variant = JsonSerializer.Deserialize<TupleFieldsEnumVariant>(ref reader, options);
+                                variants.Add(variant);
+                            }
+                        }
+                        reader.Read();
+                    }
+
+                    types.Add(new EnumIdlTypeDefinition() { Name = typeName, Variants = variants.ToArray() });
+
+                    reader.Read(); // end array
                 }
 
                 // end type inner property

@@ -9,5 +9,10 @@ namespace Solnet.Anchor.Models.Types.Base
     public class IdlBigInt : IIdlType
     {
         public string TypeName { get; set; }
+
+        public string GenerateTypeDeclaration()
+        {
+            return "BigInteger";
+        }
     }
 }

@@ -8,5 +8,9 @@ namespace Solnet.Anchor.Models.Types.Base
 {
     public class IdlString : IIdlType
     {
+        public string GenerateTypeDeclaration()
+        {
+            return "string";
+        }
     }
 }

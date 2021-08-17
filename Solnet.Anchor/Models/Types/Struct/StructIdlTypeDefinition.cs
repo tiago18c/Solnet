@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Solnet.Anchor.CodeGen;
 
 namespace Solnet.Anchor.Models.Types
 {
@@ -11,5 +12,27 @@ namespace Solnet.Anchor.Models.Types
         public string Name { get; set; }
 
         public IdlField[] Fields { get; set; }
+
+
+        public string GenerateCode()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(Utilities.Lvl1Ident);
+            sb.Append("public class ");
+            sb.Append(Utilities.FixName(Name));
+            sb.AppendLine(" {");
+
+            foreach(var field in Fields)
+            {
+                sb.Append(Utilities.Lvl2Ident);
+                sb.AppendLine(field.GenerateFieldDeclaration());
+            }
+
+
+            sb.Append(Utilities.Lvl1Ident);
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
     }
 }

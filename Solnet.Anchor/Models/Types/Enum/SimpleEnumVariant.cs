@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Solnet.Anchor.Models.Types
+namespace Solnet.Anchor.Models.Types.Enum
 {
-    public class NamedEnumFields : IEnumVariants
+    public class SimpleEnumVariant : IEnumVariant
     {
-        public IdlField[] Fields { get; set; }
+        public string Name { get; set; }
     }
 }

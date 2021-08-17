@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Solnet.Anchor.Models.Types
 {
-    public interface IEnumVariants
+    public interface IEnumVariant
     {
+        string Name { get; set; }
     }
 }

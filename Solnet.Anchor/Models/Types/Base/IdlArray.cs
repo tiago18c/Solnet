@@ -15,5 +15,10 @@ namespace Solnet.Anchor.Models.Types.Base
         public IIdlType ValuesType { get; set; }
 
         public int? Size { get; set; }
+
+        public string GenerateTypeDeclaration()
+        {
+            return ValuesType.GenerateTypeDeclaration() + "[]";
+        }
     }
 }

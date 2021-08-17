@@ -8,5 +8,9 @@ namespace Solnet.Anchor.Models.Types.Base
 {
     public class IdlPublicKey : IIdlType
     {
+        public string GenerateTypeDeclaration()
+        {
+            return "PublicKey";
+        }
     }
 }

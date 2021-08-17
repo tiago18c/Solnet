@@ -1,4 +1,5 @@
-﻿using Solnet.Anchor.Converters;
+﻿using Solnet.Anchor.CodeGen;
+using Solnet.Anchor.Converters;
 using Solnet.Anchor.Models.Types;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,10 @@ namespace Solnet.Anchor.Models
 
         [JsonConverter(typeof(IIdlTypeConverter))]
         public IIdlType Type { get; set; }
+
+        internal string GenerateFieldDeclaration()
+        {
+            return "public " + Type.GenerateTypeDeclaration() + " " + Utilities.FixName(Name) + " { get; set; }";
+        }
     }
 }
