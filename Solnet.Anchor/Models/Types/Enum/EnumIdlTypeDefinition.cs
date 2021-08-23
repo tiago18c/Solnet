@@ -14,8 +14,6 @@ namespace Solnet.Anchor.Models.Types
     {
         public string Name { get; set; }
 
-
-        [JsonConverter(typeof(IEnumVariantsConverter))]
         public IEnumVariant[] Variants { get; set; }
 
         public string GenerateCode()
@@ -26,70 +24,96 @@ namespace Solnet.Anchor.Models.Types
 
             sb.Append(Utilities.Lvl1Ident);
             sb.Append("public enum ");
-            sb.Append(Utilities.FixName(Name));
+            sb.Append(Name.ToPascalCase());
             if (isPure)
                 sb.AppendLine(" {");
             else
                 sb.AppendLine("Type {");
 
-            foreach(var variant in Variants)
+            foreach (var variant in Variants)
             {
                 sb.Append(Utilities.Lvl2Ident);
-                sb.Append(Utilities.FixName(variant.Name));
+                sb.Append(variant.Name.ToPascalCase());
                 sb.AppendLine(",");
             }
 
+            sb.Append(Utilities.Lvl1Ident);
             sb.AppendLine("}");
 
-            if(!isPure)
+            if (!isPure)
             {
                 sb.Append(Utilities.Lvl1Ident);
                 sb.Append("public class ");
-                sb.Append(Utilities.FixName(Name));
+                sb.Append(Name.ToPascalCase());
                 sb.AppendLine(" {");
 
                 sb.Append(Utilities.Lvl2Ident);
                 sb.Append("public ");
-                sb.Append(Utilities.FixName(Name));
+                sb.Append(Name.ToPascalCase());
                 sb.AppendLine("Type Type { get; set; }");
 
-                foreach(var variant in Variants)
+                foreach (var variant in Variants)
                 {
                     if (variant is SimpleEnumVariant) continue;
 
                     sb.Append(Utilities.Lvl2Ident);
                     sb.Append("public ");
 
-                    if(variant is NamedFieldsEnumVariant nf)
+                    if (variant is NamedFieldsEnumVariant nf)
                     {
-                        sb.Append(Utilities.FixName(nf.Name));
+                        sb.Append(nf.Name.ToPascalCase());
                         sb.Append("Type ");
-                        sb.Append(Utilities.FixName(nf.Name));
+                        sb.Append(nf.Name.ToPascalCase());
                         sb.AppendLine("Value { get; set; }");
                     }
                     else if (variant is TupleFieldsEnumVariant tupleVariant)
                     {
-                        sb.Append("Tuple");
+                        sb.Append("Tuple<");
 
                         // generate tuple types
 
-                        sb.Append("/* missing tuple types */ ");
+                        sb.Append(tupleVariant.Fields[0].GenerateTypeDeclaration());
 
-                        sb.Append(Utilities.FixName(tupleVariant.Name));
+                        for (int i = 1; i < tupleVariant.Fields.Length; i++)
+                        {
+                            sb.Append(", ");
+                            sb.Append(tupleVariant.Fields[i].GenerateTypeDeclaration());
+                        }
+
+                        sb.Append("> ");
+
+                        sb.Append(tupleVariant.Name.ToPascalCase());
                         sb.AppendLine("Value { get; set; }");
                     }
                 }
 
 
 
+                sb.Append(Utilities.Lvl1Ident);
                 sb.AppendLine("}");
 
 
                 foreach (var variant in Variants)
                 {
                     if (variant is NamedFieldsEnumVariant namedFieldsEnumVariant)
-                        sb.AppendLine(" //NEED TO GENERATE TYPES FROM STRUCT ENUM VARIANT      " +
-                             namedFieldsEnumVariant.Name);
+                    {
+                        sb.Append(Utilities.Lvl1Ident);
+                        sb.Append("public class ");
+                        sb.Append(namedFieldsEnumVariant.Name.ToPascalCase());
+                        sb.Append("Type ");
+                        sb.AppendLine(" {");
+
+                        foreach (var field in namedFieldsEnumVariant.Fields)
+                        {
+                            sb.Append(Utilities.Lvl2Ident);
+                            sb.AppendLine(field.GenerateFieldDeclaration());
+                        }
+
+
+
+                        sb.Append(Utilities.Lvl1Ident);
+                        sb.AppendLine("}");
+                    }
                 }
             }
 

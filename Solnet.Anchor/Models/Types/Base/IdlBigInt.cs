@@ -10,9 +10,19 @@ namespace Solnet.Anchor.Models.Types.Base
     {
         public string TypeName { get; set; }
 
+        public string GenerateSerialization(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, Tuple<int, string> offset)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GenerateTypeDeclaration()
         {
             return "BigInteger";
+        }
+
+        public Tuple<int, string, string> GetDataSize(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, string ident)
+        {
+            return new(16, string.Empty, string.Empty);
         }
     }
 }

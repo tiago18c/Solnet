@@ -30,6 +30,14 @@
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "bruh",
+          "type": {
+            "vec": [
+              "string"
+            ]
+          }
         }
       ]
     },
@@ -51,6 +59,86 @@
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "bruh",
+          "type": {
+            "array": [
+              {
+                "array": [
+                  "u8",
+                  280
+                ]
+              },
+              280
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "plsignore",
+      "accounts": [
+        {
+          "name": "chatRoom",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "bruh",
+          "type": {
+            "vec": [
+              {
+                "vec": [
+                  "string"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "plsignore2",
+      "accounts": [
+        {
+          "name": "chatRoom",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "bruh",
+          "type": {
+            "vec": [
+              {
+                "vec": [
+                  "u8"
+                ]
+              }
+            ]
+          }
         }
       ]
     },
@@ -115,7 +203,12 @@
             "name": "name",
             "type": {
               "array": [
-                "u8",
+                {
+                  "array": [
+                    "u8",
+                    280
+                  ]
+                },
                 280
               ]
             }

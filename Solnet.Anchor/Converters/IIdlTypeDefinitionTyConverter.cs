@@ -103,7 +103,7 @@ namespace Solnet.Anchor.Converters
                         if (tmp.TokenType != JsonTokenType.PropertyName)
                         {
                             variants.Add(new SimpleEnumVariant() { Name = variantName });
-
+                            reader = tmp;
                         }
                         else
                         {

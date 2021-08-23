@@ -294,6 +294,9 @@
                 "type": "u64"
               }
             ]
+          },
+          {
+            "name":  "SomeOtherShit"
           }
         ]
       }

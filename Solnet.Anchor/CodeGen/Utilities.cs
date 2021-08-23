@@ -12,13 +12,11 @@ namespace Solnet.Anchor.CodeGen
 
         public static readonly string Lvl2Ident = "        ";
 
-        public static string FixName(string name)
-        {
-            var chars = name.ToArray();
+        public static readonly string Lvl3Ident = "            ";
 
-            if (char.IsLower(chars[0]))
-                chars[0] = char.ToUpper(chars[0]);
-            return new string(chars);
-        }
+        public static readonly string Lvl4Ident = "                ";
+
+        public static readonly string PublicFieldModifierIdent = "        public ";
+    
     }
 }

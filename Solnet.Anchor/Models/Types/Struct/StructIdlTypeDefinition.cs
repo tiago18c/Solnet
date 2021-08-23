@@ -20,7 +20,7 @@ namespace Solnet.Anchor.Models.Types
 
             sb.Append(Utilities.Lvl1Ident);
             sb.Append("public class ");
-            sb.Append(Utilities.FixName(Name));
+            sb.Append(Name.ToPascalCase());
             sb.AppendLine(" {");
 
             foreach(var field in Fields)

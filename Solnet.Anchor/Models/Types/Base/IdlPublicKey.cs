@@ -12,5 +12,15 @@ namespace Solnet.Anchor.Models.Types.Base
         {
             return "PublicKey";
         }
+
+        public Tuple<int, string, string> GetDataSize(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, string ident)
+        {
+            return new Tuple<int, string, string>(32, string.Empty, string.Empty);
+        }
+
+        public string GenerateSerialization(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, Tuple<int, string> offset)
+        {
+            return "//should be an idl defined serialization";
+        }
     }
 }

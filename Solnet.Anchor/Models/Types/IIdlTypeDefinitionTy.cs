@@ -8,6 +8,7 @@ namespace Solnet.Anchor.Models.Types
 {
     public interface IIdlTypeDefinitionTy
     {
+        string Name { get; }
         string GenerateCode();
     }
 }
