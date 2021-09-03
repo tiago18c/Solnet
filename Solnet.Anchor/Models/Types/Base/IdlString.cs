@@ -23,7 +23,10 @@ namespace Solnet.Anchor.Models.Types.Base
         public string GenerateSerialization(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, Tuple<int, string> offset)
         {
 
-            return $"{Utilities.Lvl3Ident}data."
+            //$""
+
+
+            //return $"{Utilities.Lvl3Ident}data.";
 
             return "//should be an idl defined serialization";
         }

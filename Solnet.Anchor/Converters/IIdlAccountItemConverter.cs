@@ -18,7 +18,7 @@ namespace Solnet.Anchor.Converters
 
             List<IIdlAccountItem> accountItems = new List<IIdlAccountItem>();
 
-            while(reader.Read() && reader.TokenType == JsonTokenType.StartObject)
+            while (reader.Read() && reader.TokenType == JsonTokenType.StartObject)
             {
                 //IIdlAccountItem acc = 
 
@@ -26,7 +26,7 @@ namespace Solnet.Anchor.Converters
                 if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException("Unexpected error value.");
 
                 string propertyName = reader.GetString();
-                if("name" != propertyName) throw new JsonException("Unexpected error value.");
+                if ("name" != propertyName) throw new JsonException("Unexpected error value.");
 
                 reader.Read();
                 if (reader.TokenType != JsonTokenType.String) throw new JsonException("Unexpected error value.");

@@ -16,6 +16,15 @@ namespace Solnet.Anchor.CodeGen
                 chars[0] = char.ToUpper(chars[0]);
             return new string(chars);
         }
+        
+        public static string ToCamelCase(this string name)
+        {
+            var chars = name.ToArray();
+
+            if (char.IsUpper(chars[0]))
+                chars[0] = char.ToLower(chars[0]);
+            return new string(chars);
+        }
 
         public static string ToSnakeCase(this string name)
         {
@@ -25,9 +34,9 @@ namespace Solnet.Anchor.CodeGen
 
             sb.Append(char.ToLowerInvariant(name[0]));
 
-            for(int i = 1; i < name.Length; i++)
+            for (int i = 1; i < name.Length; i++)
             {
-                if(char.IsUpper(name[i]))
+                if (char.IsUpper(name[i]))
                 {
                     sb.Append("_");
                     sb.Append(char.ToLowerInvariant(name[i]));

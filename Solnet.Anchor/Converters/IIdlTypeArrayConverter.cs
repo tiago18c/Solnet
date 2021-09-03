@@ -16,13 +16,13 @@ namespace Solnet.Anchor.Converters
 
         public override IIdlType[] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if(reader.TokenType != JsonTokenType.StartArray) throw new JsonException("Unexpected error value.");
+            if (reader.TokenType != JsonTokenType.StartArray) throw new JsonException("Unexpected error value.");
 
             reader.Read();
 
             List<IIdlType> types = new();
 
-            while(reader.TokenType != JsonTokenType.EndArray)
+            while (reader.TokenType != JsonTokenType.EndArray)
             {
                 var type = idlTypeConverter.Read(ref reader, null, options);
 

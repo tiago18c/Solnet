@@ -17,6 +17,6 @@ namespace Solnet.Anchor.CodeGen
         public static readonly string Lvl4Ident = "                ";
 
         public static readonly string PublicFieldModifierIdent = "        public ";
-    
+
     }
 }

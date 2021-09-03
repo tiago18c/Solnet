@@ -12,7 +12,7 @@ namespace Solnet.Anchor.Models.Types.Base
 
         public string GenerateSerialization(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, Tuple<int, string> offset)
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public string GenerateTypeDeclaration()

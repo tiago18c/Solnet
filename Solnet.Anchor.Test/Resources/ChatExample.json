@@ -32,6 +32,14 @@
           "type": "string"
         },
         {
+          "name": "test",
+          "type": "u128"
+        },
+        {
+          "name": "test2",
+          "type": "i128"
+        },
+        {
           "name": "bruh",
           "type": {
             "vec": [
@@ -71,72 +79,6 @@
                 ]
               },
               280
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "plsignore",
-      "accounts": [
-        {
-          "name": "chatRoom",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "bruh",
-          "type": {
-            "vec": [
-              {
-                "vec": [
-                  "string"
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "plsignore2",
-      "accounts": [
-        {
-          "name": "chatRoom",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "name": "bruh",
-          "type": {
-            "vec": [
-              {
-                "vec": [
-                  "u8"
-                ]
-              }
             ]
           }
         }

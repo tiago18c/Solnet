@@ -58,7 +58,7 @@ namespace Solnet.Anchor.Models.Types.Base
             sb.AppendLine("}");
 
 
-            if(offset.Item2 != string.Empty)
+            if (offset.Item2 != string.Empty)
             {
                 sb.Append(Utilities.Lvl3Ident);
                 sb.Append(offset.Item2);
@@ -132,7 +132,7 @@ namespace Solnet.Anchor.Models.Types.Base
 
             if (!Size.HasValue)
                 sb.AppendLine(" + 4;");
-            else 
+            else
                 sb.AppendLine(";");
 
             sb.Append(Utilities.Lvl3Ident);

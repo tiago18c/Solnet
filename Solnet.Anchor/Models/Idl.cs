@@ -59,7 +59,7 @@ namespace Solnet.Anchor.Models
 
             if (Accounts != null)
             {
-                sb.AppendLine( "#region Accounts");
+                sb.AppendLine("#region Accounts");
 
                 foreach (var acc in Accounts)
                 {
@@ -87,7 +87,7 @@ namespace Solnet.Anchor.Models
             }
 
 
-            if(Instructions != null)
+            if (Instructions != null)
             {
 
                 sb.Append(Utilities.Lvl1Ident);
@@ -95,7 +95,7 @@ namespace Solnet.Anchor.Models
                 sb.Append(NamePascalCase);
                 sb.AppendLine("Program {");
 
-                foreach(var instruction in Instructions)
+                foreach (var instruction in Instructions)
                 {
                     sb.Append(Utilities.Lvl2Ident);
                     sb.Append("public static TransactionInstruction ");
@@ -117,7 +117,7 @@ namespace Solnet.Anchor.Models
 
                     string dynamicSizeComulative = "";
 
-                    if (instruction.Args != null &&  instruction.Args.Length > 0)
+                    if (instruction.Args != null && instruction.Args.Length > 0)
                     {
                         foreach (var arg in instruction.Args)
                         {
@@ -131,7 +131,7 @@ namespace Solnet.Anchor.Models
                             if (size.Item2 != string.Empty)
                             {
                                 dynamicSize.Add(size.Item2);
-                                if(dynamicSizeComulative == string.Empty)
+                                if (dynamicSizeComulative == string.Empty)
                                 {
                                     dynamicSizeComulative = size.Item2;
                                 }
@@ -162,7 +162,7 @@ namespace Solnet.Anchor.Models
                     sb.Append(Utilities.Lvl3Ident);
                     sb.AppendLine("{");
 
-                    foreach(var acc in instruction.Accounts)
+                    foreach (var acc in instruction.Accounts)
                     {
                         sb.AppendLine(acc.GenerateAccountSerialization("accounts"));
                     }
@@ -194,7 +194,7 @@ namespace Solnet.Anchor.Models
 
 
 
-                    foreach(var ser in serializationCode)
+                    foreach (var ser in serializationCode)
                     {
                         sb.AppendLine(ser);
                     }
@@ -210,7 +210,7 @@ namespace Solnet.Anchor.Models
 
                 /// account groups
 
-                foreach(var instruction in Instructions)
+                foreach (var instruction in Instructions)
                 {
                     List<StringBuilder> innerTypes = new();
                     sb.Append(Utilities.Lvl1Ident);
@@ -219,7 +219,7 @@ namespace Solnet.Anchor.Models
                     sb.Append(instruction.Name);
                     sb.AppendLine("Accounts {");
 
-                    foreach(var acc in instruction.Accounts)
+                    foreach (var acc in instruction.Accounts)
                     {
                         sb.Append(Utilities.PublicFieldModifierIdent);
 
@@ -244,9 +244,9 @@ namespace Solnet.Anchor.Models
         {
             List<IdlAccounts> accounts = new List<IdlAccounts>();
 
-            foreach(var acc in accountItems)
+            foreach (var acc in accountItems)
             {
-                if(acc is IdlAccounts accountsGroup)
+                if (acc is IdlAccounts accountsGroup)
                 {
                     accounts.Add(accountsGroup);
                     accounts.AddRange(GetAccountGroups(accountsGroup.Accounts));

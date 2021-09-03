@@ -28,7 +28,7 @@ namespace Solnet.Anchor.Models
 
             Name = Name.ToPascalCase();
 
-            foreach(var account in Accounts)
+            foreach (var account in Accounts)
             {
                 account.PreProcess(baseNamespace, Name);
             }

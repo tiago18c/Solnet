@@ -27,11 +27,11 @@ namespace Solnet.Anchor.Models.Types.Base
 
         public Tuple<int, string, string> GetDataSize(Dictionary<string, IIdlTypeDefinitionTy> typeMap, string comulativeFieldName, string ident)
         {
-            var res = ValuesType.GetDataSize(typeMap, comulativeFieldName + (ValuesType is IdlValueType ?  ".Value" : ""), ident);
+            var res = ValuesType.GetDataSize(typeMap, comulativeFieldName + (ValuesType is IdlValueType ? ".Value" : ""), ident);
 
             string condition = ValuesType is IdlValueType ? $"{comulativeFieldName}.HasValue" : $"{comulativeFieldName} != null";
 
-            if(res.Item2 == string.Empty && res.Item3 == string.Empty)
+            if (res.Item2 == string.Empty && res.Item3 == string.Empty)
             {
                 return new(1, $"({condition} ? {res.Item1} : 0)", string.Empty);
             }
@@ -50,7 +50,7 @@ namespace Solnet.Anchor.Models.Types.Base
 
             sb.Append(Utilities.Lvl3Ident);
             sb.Append($"int {comulativeFieldName.Replace("[", "_").Replace("]", "_").Replace(".", "_")}Size = {condition} ? {res.Item1} + {res.Item2} : {res.Item1};");
-            
+
 
             return new Tuple<int, string, string>(1, $"{comulativeFieldName.Replace("[", "_").Replace("]", "_").Replace(".", "_")}Size", sb.ToString());
         }

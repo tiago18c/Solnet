@@ -66,7 +66,7 @@ namespace Solnet.Anchor.Models.Accounts
         {
             StringBuilder sb = new();
 
-            foreach(var acc in Accounts)
+            foreach (var acc in Accounts)
             {
                 sb.AppendLine(acc.GenerateAccountSerialization(objectName + "." + NamePascalCase));
             }

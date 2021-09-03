@@ -27,6 +27,18 @@ namespace Solnet.Programs.Utilities
         }
 
         /// <summary>
+        /// Write a boolean to the byte array at the given offset.
+        /// </summary>
+        /// <param name="data">The span to get data from.</param>
+        /// <param name="value">The boolean value to write.</param>
+        /// <param name="offset">The offset at which to write the 8-bit unsigned integer.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the offset is too big for the data array.</exception>
+        public static void WriteBool(this byte[] data, bool value, int offset)
+        {
+            data.WriteU8((byte)(value ? 1 : 0), offset);
+        }
+
+        /// <summary>
         /// Write a 16-bit unsigned integer to the byte array at the given offset.
         /// </summary>
         /// <param name="data">The span to get data from.</param>
@@ -79,7 +91,7 @@ namespace Solnet.Programs.Utilities
         {
             if (offset > data.Length - sizeof(sbyte))
                 throw new ArgumentOutOfRangeException(nameof(offset));
-            data[offset] = (byte) value;
+            data[offset] = (byte)value;
         }
 
         /// <summary>
@@ -123,7 +135,7 @@ namespace Solnet.Programs.Utilities
                 throw new ArgumentOutOfRangeException(nameof(offset));
             BinaryPrimitives.WriteInt64LittleEndian(data.AsSpan(offset, sizeof(long)), value);
         }
-        
+
         /// <summary>
         /// Write a span of bytes to the byte array at the given offset.
         /// </summary>
@@ -169,7 +181,7 @@ namespace Solnet.Programs.Utilities
             int byteCount = bigInteger.GetByteCount(isSigned);
             if (offset + byteCount > data.Length)
                 throw new ArgumentOutOfRangeException(nameof(offset));
-            
+
             bigInteger.TryWriteBytes(
                 data.AsSpan(offset, byteCount),
                 out int written,
@@ -177,7 +189,7 @@ namespace Solnet.Programs.Utilities
                 isBigEndian);
             return written;
         }
-        
+
         /// <summary>
         /// Write a double-precision floating-point value to the byte array at the given offset.
         /// </summary>
@@ -189,10 +201,10 @@ namespace Solnet.Programs.Utilities
         {
             if (offset + sizeof(double) > data.Length)
                 throw new ArgumentOutOfRangeException(nameof(offset));
-            
+
             BinaryPrimitives.WriteDoubleLittleEndian(data.AsSpan(offset, sizeof(double)), value);
         }
-        
+
         /// <summary>
         /// Write a single-precision floating-point value to the byte array at the given offset.
         /// </summary>
@@ -204,7 +216,7 @@ namespace Solnet.Programs.Utilities
         {
             if (offset + sizeof(float) > data.Length)
                 throw new ArgumentOutOfRangeException(nameof(offset));
-            
+
             BinaryPrimitives.WriteSingleLittleEndian(data.AsSpan(offset, sizeof(float)), value);
         }
 
@@ -218,12 +230,32 @@ namespace Solnet.Programs.Utilities
         /// <returns>The encoded data.</returns>
         public static byte[] EncodeRustString(string data)
         {
-            byte[] stringBytes = Encoding.ASCII.GetBytes(data);
+            byte[] stringBytes = Encoding.UTF8.GetBytes(data);
             byte[] encoded = new byte[stringBytes.Length + sizeof(uint)];
-            
-            encoded.WriteU32((uint) stringBytes.Length, 0);
+
+            encoded.WriteU32((uint)stringBytes.Length, 0);
             encoded.WriteSpan(stringBytes, sizeof(uint));
             return encoded;
+        }
+
+        /// <summary>
+        /// Write a single-precision floating-point value to the byte array at the given offset.
+        /// </summary>
+        /// <param name="data">The byte array to get data from.</param>
+        /// <param name="value">The <see cref="float"/> to write.</param>
+        /// <param name="offset">The offset at which to write the <see cref="float"/>.</param>
+        /// <returns>Returns the number of bytes written to the buffer.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the offset is too big for the data array.</exception>
+        public static int WriteString(this byte[] data, string value, int offset)
+        {
+            byte[] stringBytes = Encoding.UTF8.GetBytes(value);
+            if (offset + sizeof(uint) + stringBytes.Length > data.Length)
+                throw new ArgumentOutOfRangeException(nameof(offset));
+
+            data.WriteU32((uint)stringBytes.Length, offset);
+            data.WriteSpan(stringBytes, offset + sizeof(uint));
+
+            return sizeof(uint) + stringBytes.Length;
         }
     }
 }

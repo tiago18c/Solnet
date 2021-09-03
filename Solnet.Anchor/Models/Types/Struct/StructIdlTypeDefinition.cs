@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Solnet.Anchor.CodeGen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Solnet.Anchor.CodeGen;
 
 namespace Solnet.Anchor.Models.Types
 {
@@ -23,7 +23,7 @@ namespace Solnet.Anchor.Models.Types
             sb.Append(Name.ToPascalCase());
             sb.AppendLine(" {");
 
-            foreach(var field in Fields)
+            foreach (var field in Fields)
             {
                 sb.Append(Utilities.Lvl2Ident);
                 sb.AppendLine(field.GenerateFieldDeclaration());

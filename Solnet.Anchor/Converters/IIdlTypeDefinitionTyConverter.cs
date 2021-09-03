@@ -90,7 +90,7 @@ namespace Solnet.Anchor.Converters
                         if (tmp.TokenType != JsonTokenType.PropertyName) throw new JsonException("Unexpected error value.");
                         propertyName = tmp.GetString();
 
-                        if("name" != propertyName) throw new JsonException("Unexpected error value.");
+                        if ("name" != propertyName) throw new JsonException("Unexpected error value.");
 
 
                         tmp.Read();

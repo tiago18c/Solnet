@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Solnet.Anchor.Models;
+using System;
 using System.IO;
-using Solnet.Anchor.Models;
 using System.Text.Json;
 
 namespace Solnet.Anchor
