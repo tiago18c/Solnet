@@ -24,7 +24,7 @@ namespace Solnet.Anchor.Models
 
         internal void PreProcess(string baseNamespace, string funcNamespace)
         {
-            InstructionSignatureHash = SigHash.GetSigHash(Name, funcNamespace);
+            InstructionSignatureHash = SigHash.GetInstructionSignatureHash(Name, funcNamespace);
 
             Name = Name.ToPascalCase();
 

@@ -13,7 +13,7 @@ namespace Solnet.Anchor.CodeGen
         private static readonly SHA256 digest = SHA256.Create();
 
 
-        public static ulong GetSigHash(string funcName, string funcNamespace)
+        public static ulong GetInstructionSignatureHash(string funcName, string funcNamespace)
         {
             var functionSignature = $"{funcNamespace}:{funcName.ToSnakeCase()}";
 
@@ -22,9 +22,17 @@ namespace Solnet.Anchor.CodeGen
             var bytes = hash[..8];
 
             return BinaryPrimitives.ReadUInt64LittleEndian(bytes);
+        }
 
+        public static ulong GetAccountSignatureHash(string accountName)
+        {
+            var functionSignature = $"account:{accountName.ToPascalCase()}";
 
+            var hash = digest.ComputeHash(Encoding.UTF8.GetBytes(functionSignature));
 
+            var bytes = hash[..8];
+
+            return BinaryPrimitives.ReadUInt64LittleEndian(bytes);
         }
     }
 }
