@@ -45,6 +45,13 @@ namespace Solnet.Anchor.Converters
 
                     return new IdlDefined() { TypeName = definedTypeName };
                 }
+                else if ("option" == typeName)
+                {
+                    reader.Read();
+                    IIdlType innerType = Read(ref reader, typeToConvert, options);
+                    if (reader.TokenType == JsonTokenType.EndObject) reader.Read();
+                    return new IdlOptional() { ValuesType = innerType };
+                }
                 else
                 {
                     reader.Read();
@@ -66,7 +73,7 @@ namespace Solnet.Anchor.Converters
                     }
                     else
                     {
-                        idlType = new IdlOptional() { ValuesType = innerType };
+                        throw new JsonException("unexpected error value");
                     }
 
                     reader.Read();
