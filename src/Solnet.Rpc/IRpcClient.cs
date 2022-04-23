@@ -1062,6 +1062,21 @@ namespace Solnet.Rpc
         /// </summary>
         /// <param name="signature">Transaction signature as base-58 encoded string.</param>
         /// <param name="commitment">The state commitment to consider when querying the ledger state.</param>
+        /// <returns>Returns a task that holds the asynchronous operation result and state.</returns>
+        Task<RequestResult<TransactionB64MetaSlotInfo>> GetTransactionB64Async(string signature,
+            Commitment commitment = Commitment.Finalized);
+
+        /// <summary>
+        /// Returns transaction details for a confirmed transaction.
+        /// <remarks>
+        /// <para>
+        /// The <c>commitment</c> parameter is optional, <see cref="Commitment.Processed"/> is not supported,
+        /// the default value <see cref="Commitment.Finalized"/> is not sent.
+        /// </para>
+        /// </remarks>
+        /// </summary>
+        /// <param name="signature">Transaction signature as base-58 encoded string.</param>
+        /// <param name="commitment">The state commitment to consider when querying the ledger state.</param>
         /// <returns>Returns an object that wraps the result along with possible errors with the request.</returns>
         [Obsolete("Please use GetTransactionAsync whenever possible instead. This method is expected to be removed in solana-core v1.8.")]
         Task<RequestResult<TransactionMetaSlotInfo>> GetConfirmedTransactionAsync(string signature, Commitment commitment = Commitment.Finalized);

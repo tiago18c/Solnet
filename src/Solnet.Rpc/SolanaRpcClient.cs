@@ -432,6 +432,15 @@ namespace Solnet.Rpc
                     ConfigObject.Create(KeyValue.Create("encoding", "json"), HandleCommitment(commitment))));
         }
 
+        /// <inheritdoc cref="IRpcClient.GetTransactionAsync"/>
+        public async Task<RequestResult<TransactionB64MetaSlotInfo>> GetTransactionB64Async(string signature,
+            Commitment commitment = Commitment.Finalized)
+        {
+            return await SendRequestAsync<TransactionB64MetaSlotInfo>("getTransaction",
+                Parameters.Create(signature,
+                    ConfigObject.Create(KeyValue.Create("encoding", "base64"), HandleCommitment(commitment))));
+        }
+
         /// <inheritdoc cref="IRpcClient.GetConfirmedTransactionAsync(string, Commitment)"/>
         public async Task<RequestResult<TransactionMetaSlotInfo>> GetConfirmedTransactionAsync(string signature,
             Commitment commitment = Commitment.Finalized)

@@ -66,6 +66,29 @@ namespace Solnet.Rpc.Models
         public long? BlockTime { get; set; }
     }
 
+    public class TransactionB64MetaSlotInfo
+    {
+
+        /// <summary>
+        /// The slot this transaction was processed in.
+        /// </summary>
+        public ulong Slot { get; set; }
+
+        /// <summary>
+        /// Estimated block production time.
+        /// </summary>
+        public long? BlockTime { get; set; }
+        /// <summary>
+        /// The metadata information.
+        /// </summary>
+        public TransactionMeta Meta { get; set; }
+
+
+        /// <summary>
+        /// The transaction information.
+        /// </summary>
+        public string[] Transaction { get; set; }
+    }
 
     /// <summary>
     /// Represents the tuple transaction and metadata.

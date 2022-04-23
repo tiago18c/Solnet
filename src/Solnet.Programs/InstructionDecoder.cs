@@ -171,6 +171,49 @@ namespace Solnet.Programs
         }
 
         /// <summary>
+        /// Decodes the instructions present in the given transaction and its metadata information.
+        /// </summary>
+        /// <param name="tx">The message object.</param>
+        /// <returns>The decoded instructions data.</returns>
+        public static List<DecodedInstruction> DecodeInstructions(Transaction tx)
+        {
+            List<DecodedInstruction> decodedInstructions = new();
+
+            foreach (var transactionInstruction in tx.Instructions)
+            {
+                string programKey = Encoders.Base58.EncodeData(transactionInstruction.ProgramId);
+                bool registered = InstructionDictionary.TryGetValue(programKey, out DecodeMethodType method);
+
+                if (!registered)
+                {
+                    DecodedInstruction decodedInstruction = new()
+                    {
+                        InstructionName = "Unknown",
+                        ProgramName = "Unknown",
+                        Values = new Dictionary<string, object>
+                        {
+                            { "Data", Encoders.Base58.EncodeData(transactionInstruction.Data) }
+                        },
+                        InnerInstructions = new List<DecodedInstruction>(),
+                        PublicKey = new(programKey)
+                    };
+                    for (int i = 0; i < transactionInstruction.Keys.Count; i++)
+                    {
+                        decodedInstruction.Values.Add($"Account {i + 1}", transactionInstruction.Keys[i].PublicKey);
+                    }
+                    decodedInstructions.Add(decodedInstruction);
+                    continue;
+                }
+
+                decodedInstructions.Add(method.Invoke(
+                    transactionInstruction.Data,
+                    transactionInstruction.Keys.Select(x => new PublicKey(x.PublicKey)).ToList(),
+                    Enumerable.Range(0, transactionInstruction.Keys.Count).Select(x => (byte)x).ToArray()));
+            }
+            return decodedInstructions;
+        }
+
+        /// <summary>
         /// Adds an unknown instruction to the given list of decoded instructions, with the given instruction info.
         /// </summary>
         private static DecodedInstruction AddUnknownInstruction(
